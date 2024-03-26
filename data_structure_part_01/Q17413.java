@@ -8,51 +8,49 @@ public class Q17413 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        //StringBuffer s = new StringBuffer(br.readLine());
 
+        StringBuffer sb = new StringBuffer();
         String s = br.readLine();
-        String[] arr = s.split(" ");
+        Deque<Character> deq = new ArrayDeque<>();
+        boolean ck = false;
 
-        List<String> list = new ArrayList<String>(Arrays.asList(arr));
+        for(int i = 0; i < s.length(); i++){
 
-
-        int idx = 0;
-
-        for(int i = 0; i < list.size(); i++){
-
-            String[] str = list.get(i).split("");
-
-            Deque<String> deq = new ArrayDeque<>();
-            List<String> sl = new ArrayList<>();
-
-            boolean ck = true;
-
-            for(int j = 0; j < str.length ; j++){
-
-                if(str[j].equals("<")){
-                    ck  = false;
+            if(s.charAt(i) == '<'){
+                while(!deq.isEmpty()){
+                    sb.append(deq.pop());
                 }
-
-                if(ck == true){
-                    sl.add(0, str[j]);
-                }else{
-                    sl.add(str[j]);
-                }
-
-                if(str[j].equals(">")){
-                    ck = true;
-                }
-
+                ck = true;
+            }else if(s.charAt(i) == '>'){
+                ck = false;
+                sb.append(s.charAt(i));
+                continue;
             }
 
-
-            for(String ss : sl){
-                bw.write(ss + "");
+            if(ck == true){
+                sb.append(s.charAt(i));
+            }else if(ck == false){
+                if(s.charAt(i) == ' '){
+                    while(!deq.isEmpty()){
+                        sb.append(deq.pop());
+                    }
+                    sb.append(' ');
+                    continue;
+                }else {
+                    deq.push(s.charAt(i));
+                }
             }
 
-            bw.write(" ");
-
+            if(i == s.length() -1) {
+                while(!deq.isEmpty()){
+                    sb.append(deq.pop());
+                }
+            }
         }
+
+        bw.write(String.valueOf(sb));
+
+
 
         bw.flush();
         bw.close();
