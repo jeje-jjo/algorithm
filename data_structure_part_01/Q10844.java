@@ -11,6 +11,5 @@ public class Q10844 {
 
         int n = Integer.parseInt(br.readLine());
 
-        int[] bp = new int[]
     }
 }
